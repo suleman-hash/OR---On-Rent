@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>OR — On Rent | India's Smart Rental Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --card: #1a1a26;
+  --border: #2a2a3a;
+  --orange: #ff6b1a;
+  --orange-glow: rgba(255,107,26,0.18);
+  --amber: #ffb830;
+  --rose: #e8567a;
+  --rose-glow: rgba(232,86,122,0.15);
+  --text: #f0eee8;
+  --muted: #8a8a9a;
+  --white: #ffffff;
+  --green: #2ecc71;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:rgba(10,10,15,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:2px;color:var(--white);text-decoration:none;}
+.nav-logo span{color:var(--orange);}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-links a{font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .25s;}
+.nav-links a:hover{color:var(--orange);}
+.nav-actions{display:flex;gap:12px;align-items:center;}
+.btn-nav{font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:1px;padding:9px 20px;border-radius:6px;text-decoration:none;cursor:pointer;transition:all .25s;border:none;}
+.btn-nav.outline{background:transparent;color:var(--text);border:1.5px solid var(--border);}
+.btn-nav.outline:hover{border-color:var(--orange);color:var(--orange);}
+.btn-nav.fill{background:var(--orange);color:#fff;box-shadow:0 2px 16px rgba(255,107,26,0.3);}
+.btn-nav.fill:hover{background:#e05a10;transform:translateY(-1px);}
+
+/* ── MARQUEE ── */
+.marquee-wrap{margin-top:72px;background:var(--orange);padding:13px 0;overflow:hidden;white-space:nowrap;}
+.marquee-track{display:inline-block;animation:marquee 28s linear infinite;}
+.marquee-track span{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:#fff;margin:0 20px;}
+.marquee-track span.dot{color:rgba(255,255,255,0.5);margin:0 6px;}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:120px 48px 60px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(255,107,26,0.2) 0%,transparent 65%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-150px;left:35%;width:500px;height:500px;background:radial-gradient(circle,rgba(255,184,48,0.07) 0%,transparent 65%);pointer-events:none;}
+.hero-badge{display:inline-block;background:var(--orange-glow);border:1px solid rgba(255,107,26,0.4);color:var(--orange);font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:28px;animation:fadeUp .6s ease both;}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,12vw,11rem);line-height:0.9;color:var(--white);letter-spacing:2px;animation:fadeUp .7s .1s ease both;}
+.hero h1 span{color:var(--orange);}
+.hero-sub{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:600;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-top:16px;margin-bottom:40px;animation:fadeUp .7s .2s ease both;}
+.hero-sub span{color:var(--amber);}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .7s .3s ease both;}
+.btn-primary{background:var(--orange);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:1px;padding:15px 34px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 24px rgba(255,107,26,0.35);}
+.btn-primary:hover{background:#e05a10;transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,107,26,0.45);}
+.btn-outline-hero{background:transparent;color:var(--text);font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:1px;padding:15px 34px;border-radius:8px;text-decoration:none;border:1.5px solid var(--border);cursor:pointer;transition:all .25s;}
+.btn-outline-hero:hover{border-color:var(--orange);color:var(--orange);transform:translateY(-2px);}
+.hero-stats{display:flex;gap:48px;margin-top:64px;animation:fadeUp .7s .4s ease both;flex-wrap:wrap;}
+.stat-item{display:flex;flex-direction:column;gap:4px;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--orange);}
+.stat-label{font-size:0.75rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;}
+
+/* ── SEARCH BAR ── */
+.search-section{padding:40px 48px;background:var(--surface);border-bottom:1px solid var(--border);}
+.search-box{display:flex;gap:12px;flex-wrap:wrap;align-items:center;max-width:1100px;}
+.search-input{flex:1;min-width:200px;padding:14px 20px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color .25s;}
+.search-input::placeholder{color:var(--muted);}
+.search-input:focus{border-color:var(--orange);}
+select.search-input{cursor:pointer;}
+.search-btn{padding:14px 28px;background:var(--orange);color:#fff;border:none;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:1px;cursor:pointer;transition:all .25s;white-space:nowrap;}
+.search-btn:hover{background:#e05a10;}
+
+/* ── SECTION ── */
+section.main-sec{padding:80px 48px;}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;border-bottom:1px solid var(--border);padding-bottom:24px;}
+.section-tag{font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:8px;}
+.section-tag.rose{color:var(--rose);}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1;letter-spacing:1px;color:var(--white);}
+.section-count{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:var(--border);line-height:1;}
+
+/* ── CATEGORIES NAV ── */
+.cat-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+.cat-btn{font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:1px;padding:10px 20px;border-radius:24px;border:1.5px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .25s;}
+.cat-btn:hover,.cat-btn.active{background:var(--orange);border-color:var(--orange);color:#fff;}
+.cat-btn.rose:hover,.cat-btn.rose.active{background:var(--rose);border-color:var(--rose);color:#fff;}
+
+/* ── LABOUR GRID ── */
+.labour-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;}
+.service-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 24px;position:relative;overflow:hidden;transition:all .3s;cursor:pointer;}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--amber));transform:scaleX(0);transform-origin:left;transition:transform .35s ease;}
+.service-card:hover{border-color:rgba(255,107,26,0.4);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4);}
+.service-card:hover::before{transform:scaleX(1);}
+.card-icon{font-size:2.2rem;margin-bottom:16px;display:flex;align-items:center;justify-content:center;width:56px;height:56px;background:var(--orange-glow);border-radius:12px;}
+.card-num{position:absolute;top:20px;right:22px;font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--border);}
+.card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;color:var(--white);margin-bottom:8px;}
+.card-desc{font-size:0.82rem;color:var(--muted);line-height:1.55;}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
+.tag{font-size:0.68rem;font-family:'Syne',sans-serif;font-weight:600;letter-spacing:0.5px;padding:4px 10px;border-radius:20px;background:rgba(255,107,26,0.12);color:var(--orange);border:1px solid rgba(255,107,26,0.25);}
+.tag.amber{background:rgba(255,184,48,0.1);color:var(--amber);border-color:rgba(255,184,48,0.25);}
+.tag.rose{background:rgba(232,86,122,0.1);color:var(--rose);border-color:rgba(232,86,122,0.25);}
+.tag.green{background:rgba(46,204,113,0.1);color:var(--green);border-color:rgba(46,204,113,0.25);}
+.card-price{margin-top:14px;font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--orange);}
+.card-location{font-size:0.75rem;color:var(--muted);margin-top:6px;}
+.card-book-btn{width:100%;margin-top:16px;padding:10px;background:transparent;border:1.5px solid var(--orange);color:var(--orange);border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:1px;cursor:pointer;transition:all .25s;}
+.card-book-btn:hover{background:var(--orange);color:#fff;}
+
+/* ── VEHICLE SECTION ── */
+.vehicles-section{background:var(--surface);}
+.vehicle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;}
+.vehicle-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all .3s;cursor:pointer;}
+.vehicle-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,0.5);border-color:rgba(255,107,26,0.35);}
+.vehicle-thumb{height:160px;display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative;overflow:hidden;}
+.vehicle-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,var(--card) 100%);}
+.v-car{background:linear-gradient(135deg,#1a1520 0%,#201830 100%);}
+.v-bike{background:linear-gradient(135deg,#0f1a20 0%,#18252e 100%);}
+.v-bus{background:linear-gradient(135deg,#1a1a10 0%,#26240e 100%);}
+.v-truck{background:linear-gradient(135deg,#0f1a15 0%,#142018 100%);}
+.v-const{background:linear-gradient(135deg,#1a1208 0%,#241a08 100%);}
+.v-dump{background:linear-gradient(135deg,#1a0f0a 0%,#261508 100%);}
+.vehicle-body{padding:22px 24px;}
+.vehicle-num{font-family:'Bebas Neue',sans-serif;font-size:0.82rem;color:var(--orange);letter-spacing:2px;margin-bottom:6px;}
+.vehicle-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--white);margin-bottom:8px;}
+.vehicle-desc{font-size:0.82rem;color:var(--muted);line-height:1.55;margin-bottom:14px;}
+.vehicle-options{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.price-note{font-size:0.72rem;color:var(--amber);font-family:'Syne',sans-serif;font-weight:600;display:flex;align-items:center;gap:6px;background:rgba(255,184,48,0.08);border:1px solid rgba(255,184,48,0.2);padding:6px 12px;border-radius:6px;width:fit-content;margin-bottom:12px;}
+.book-btn{width:100%;padding:12px;background:transparent;border:1.5px solid var(--orange);color:var(--orange);border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:1px;cursor:pointer;transition:all .25s;}
+.book-btn:hover{background:var(--orange);color:#fff;}
+
+/* ── MARRIAGE SECTION ── */
+.marriage-section{background:linear-gradient(180deg,var(--bg) 0%,#12101a 100%);}
+.marriage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;}
+.marriage-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .3s;cursor:pointer;position:relative;}
+.marriage-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rose),var(--amber));transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.marriage-card:hover{border-color:rgba(232,86,122,0.4);transform:translateY(-5px);box-shadow:0 16px 44px rgba(0,0,0,0.45);}
+.marriage-card:hover::before{transform:scaleX(1);}
+.m-thumb{height:140px;display:flex;align-items:center;justify-content:center;font-size:4.5rem;position:relative;overflow:hidden;}
+.m-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,var(--card) 100%);}
+.m-cater{background:linear-gradient(135deg,#1a1020 0%,#200a1a 100%);}
+.m-waiter{background:linear-gradient(135deg,#12181a 0%,#0f2020 100%);}
+.m-veh{background:linear-gradient(135deg,#1a1520 0%,#1e1030 100%);}
+.m-hall{background:linear-gradient(135deg,#0a1520 0%,#0e1e2a 100%);}
+.m-lawn{background:linear-gradient(135deg,#0a1808 0%,#0f2010 100%);}
+.m-farm{background:linear-gradient(135deg,#181208 0%,#221a08 100%);}
+.m-utensil{background:linear-gradient(135deg,#18080a 0%,#220810 100%);}
+.m-decor{background:linear-gradient(135deg,#1a0a18 0%,#240820 100%);}
+.m-event{background:linear-gradient(135deg,#0a0a1a 0%,#10102a 100%);}
+.m-caterer2{background:linear-gradient(135deg,#1a1018 0%,#200e20 100%);}
+.m-body{padding:20px 22px;}
+.m-num{font-family:'Bebas Neue',sans-serif;font-size:0.8rem;color:var(--rose);letter-spacing:2px;margin-bottom:6px;}
+.m-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--white);margin-bottom:8px;}
+.m-desc{font-size:0.8rem;color:var(--muted);line-height:1.55;margin-bottom:12px;}
+.m-opts{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
+.m-book-btn{width:100%;padding:11px;background:transparent;border:1.5px solid var(--rose);color:var(--rose);border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:1px;cursor:pointer;transition:all .25s;}
+.m-book-btn:hover{background:var(--rose);color:#fff;}
+
+/* ── HOW IT WORKS ── */
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:var(--border);border-radius:16px;overflow:hidden;}
+.how-step{background:var(--card);padding:40px 28px;display:flex;flex-direction:column;gap:14px;position:relative;transition:background .3s;}
+.how-step:hover{background:#1e1e2e;}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:4rem;line-height:1;color:var(--orange);opacity:0.3;}
+.step-icon{font-size:2rem;}
+.step-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--white);}
+.step-desc{font-size:0.8rem;color:var(--muted);line-height:1.6;}
+
+/* ── LISTINGS SECTION ── */
+.listings-section{background:var(--surface);}
+.listings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;}
+.listing-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .3s;}
+.listing-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,0.4);border-color:rgba(255,107,26,0.3);}
+.listing-img{width:100%;height:180px;object-fit:cover;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:4rem;}
+.listing-body{padding:18px 20px;}
+.listing-cat{font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:6px;}
+.listing-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--white);margin-bottom:6px;}
+.listing-loc{font-size:0.78rem;color:var(--muted);margin-bottom:10px;}
+.listing-price{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--orange);}
+.listing-price-sub{font-size:0.7rem;color:var(--muted);margin-left:4px;font-family:'DM Sans',sans-serif;}
+.listing-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+.listing-rating{display:flex;align-items:center;gap:4px;font-size:0.78rem;color:var(--amber);}
+.listing-book-btn{padding:8px 18px;background:var(--orange);color:#fff;border:none;border-radius:6px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.5px;cursor:pointer;transition:all .25s;}
+.listing-book-btn:hover{background:#e05a10;}
+
+/* ── OWNER CTA ── */
+.owner-cta{background:linear-gradient(135deg,#1a1020 0%,#120a1a 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:80px 48px;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;position:relative;overflow:hidden;}
+.owner-cta::before{content:'';position:absolute;right:-100px;top:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,107,26,0.12) 0%,transparent 65%);pointer-events:none;}
+.cta-text .cta-label{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+.cta-text h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.5rem);color:var(--white);line-height:1.1;margin-bottom:12px;}
+.cta-text p{font-size:0.88rem;color:var(--muted);max-width:480px;line-height:1.6;}
+.cta-actions{display:flex;gap:14px;flex-wrap:wrap;}
+
+/* ── FOOTER ── */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:60px 48px 32px;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:36px;margin-bottom:48px;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--white);letter-spacing:2px;margin-bottom:12px;}
+.footer-logo span{color:var(--orange);}
+.footer-tagline{font-size:0.83rem;color:var(--muted);line-height:1.6;max-width:260px;margin-bottom:20px;}
+.footer-col h4{font-family:'Syne',sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--white);margin-bottom:18px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-col ul li a{font-size:0.82rem;color:var(--muted);text-decoration:none;transition:color .2s;}
+.footer-col ul li a:hover{color:var(--orange);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-copy{font-size:0.75rem;color:var(--muted);}
+.footer-copy span{color:var(--orange);}
+.footer-socials{display:flex;gap:12px;}
+.social-btn{width:36px;height:36px;border-radius:8px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;text-decoration:none;color:var(--muted);transition:all .2s;}
+.social-btn:hover{background:var(--orange-glow);border-color:var(--orange);color:var(--orange);}
+
+/* ── WHATSAPP BTN ── */
+.whatsapp-btn{position:fixed;bottom:28px;right:28px;width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;text-decoration:none;z-index:300;box-shadow:0 4px 20px rgba(37,211,102,0.4);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4);}50%{box-shadow:0 4px 40px rgba(37,211,102,0.7);}}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.active{display:flex;}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;position:relative;}
+.modal-close{position:absolute;top:18px;right:20px;background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;line-height:1;}
+.modal-close:hover{color:var(--white);}
+.modal h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--white);margin-bottom:6px;letter-spacing:1px;}
+.modal-sub{font-size:0.82rem;color:var(--muted);margin-bottom:28px;}
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.form-input{width:100%;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color .25s;}
+.form-input::placeholder{color:var(--muted);}
+.form-input:focus{border-color:var(--orange);}
+.form-select{appearance:none;cursor:pointer;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.modal-btn{width:100%;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:8px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:1px;cursor:pointer;transition:all .25s;margin-top:6px;}
+.modal-btn:hover{background:#e05a10;transform:translateY(-1px);}
+.modal-toggle{text-align:center;margin-top:18px;font-size:0.82rem;color:var(--muted);}
+.modal-toggle a{color:var(--orange);text-decoration:none;font-weight:600;}
+.modal-toggle a:hover{text-decoration:underline;}
+.modal-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--muted);font-size:0.75rem;}
+.modal-divider::before,.modal-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── BOOKING MODAL ── */
+.booking-detail{background:var(--surface);border-radius:10px;padding:16px;margin-bottom:20px;}
+.booking-detail-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--white);margin-bottom:4px;}
+.booking-detail-sub{font-size:0.8rem;color:var(--muted);}
+.payment-options{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px;}
+.pay-opt{padding:12px;border:1.5px solid var(--border);border-radius:8px;text-align:center;cursor:pointer;transition:all .25s;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;color:var(--muted);}
+.pay-opt:hover,.pay-opt.selected{border-color:var(--orange);color:var(--orange);background:var(--orange-glow);}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1000px){.footer-top{grid-template-columns:1fr 1fr 1fr;}}
+@media(max-width:900px){
+  nav{padding:14px 22px;}
+  .nav-links{display:none;}
+  .hero{padding:100px 22px 48px;}
+  section.main-sec{padding:60px 22px;}
+  .search-section{padding:30px 22px;}
+  .owner-cta{padding:60px 22px;}
+  footer{padding:48px 22px 24px;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .hero-stats{gap:28px;}
+}
+@media(max-width:600px){
+  .hero h1{font-size:4.2rem;}
+  .footer-top{grid-template-columns:1fr;}
+  .labour-grid,.vehicle-grid,.marriage-grid,.listings-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .payment-options{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo"><span>OR</span> ON RENT</a>
+  <div class="nav-links">
+    <a href="#labour">Labour</a>
+    <a href="#vehicles">Vehicles</a>
+    <a href="#marriage">Marriage</a>
+    <a href="#listings">Browse</a>
+    <a href="#how">How It Works</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-actions">
+    <button class="btn-nav outline" onclick="openModal('loginModal')">Login</button>
+    <button class="btn-nav fill" onclick="openModal('registerModal')">List Your Service</button>
+  </div>
+</nav>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>LABOUR SERVICES</span><span class="dot">●</span>
+    <span>VEHICLE RENTALS</span><span class="dot">●</span>
+    <span>MARRIAGE EVENTS</span><span class="dot">●</span>
+    <span>CAR + DRIVER</span><span class="dot">●</span>
+    <span>ELECTRICIANS</span><span class="dot">●</span>
+    <span>DELIVERY TRUCKS</span><span class="dot">●</span>
+    <span>EVENT ORGANIZERS</span><span class="dot">●</span>
+    <span>HOUSE KEEPER</span><span class="dot">●</span>
+    <span>CHEF ON CALL</span><span class="dot">●</span>
+    <span>CONSTRUCTION VEHICLES</span><span class="dot">●</span>
+    <span>FARM HOUSE BOOKING</span><span class="dot">●</span>
+    <span>LABOUR SERVICES</span><span class="dot">●</span>
+    <span>VEHICLE RENTALS</span><span class="dot">●</span>
+    <span>MARRIAGE EVENTS</span><span class="dot">●</span>
+    <span>CAR + DRIVER</span><span class="dot">●</span>
+    <span>ELECTRICIANS</span><span class="dot">●</span>
+    <span>DELIVERY TRUCKS</span><span class="dot">●</span>
+    <span>EVENT ORGANIZERS</span><span class="dot">●</span>
+    <span>HOUSE KEEPER</span><span class="dot">●</span>
+    <span>CHEF ON CALL</span><span class="dot">●</span>
+    <span>CONSTRUCTION VEHICLES</span><span class="dot">●</span>
+    <span>FARM HOUSE BOOKING</span><span class="dot">●</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🔑 India's Smart Rental Marketplace</div>
+  <h1><span>OR</span><br>ON RENT</h1>
+  <p class="hero-sub">Labour · Vehicles · Weddings — Service at a <span>Click</span></p>
+  <div class="hero-actions">
+    <a href="#listings" class="btn-primary">Browse Services</a>
+    <button class="btn-outline-hero" onclick="openModal('registerModal')">List Your Service →</button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item"><span class="stat-num">10+</span><span class="stat-label">Labour Types</span></div>
+    <div class="stat-item"><span class="stat-num">6+</span><span class="stat-label">Vehicle Categories</span></div>
+    <div class="stat-item"><span class="stat-num">10+</span><span class="stat-label">Wedding Services</span></div>
+    <div class="stat-item"><span class="stat-num">24/7</span><span class="stat-label">Available</span></div>
+    <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Verified Pros</span></div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="search-section">
+  <div class="search-box">
+    <input class="search-input" type="text" placeholder="🔍  Search service, vehicle, or event..."/>
+    <select class="search-input" style="max-width:180px;">
+      <option value="">All Categories</option>
+      <option>Labour &amp; Services</option>
+      <option>Vehicles &amp; Services</option>
+      <option>Marriage &amp; Services</option>
+    </select>
+    <select class="search-input" style="max-width:160px;">
+      <option value="">All Cities</option>
+      <option>Pune</option>
+      <option>Mumbai</option>
+      <option>Nashik</option>
+      <option>Nagpur</option>
+      <option>Aurangabad</option>
+    </select>
+    <select class="search-input" style="max-width:170px;">
+      <option value="">Price Range</option>
+      <option>Under ₹500</option>
+      <option>₹500 – ₹2000</option>
+      <option>₹2000 – ₹5000</option>
+      <option>Above ₹5000</option>
+    </select>
+    <button class="search-btn">Search →</button>
+  </div>
+</div>
+
+<!-- ══ LABOUR SERVICES ══ -->
+<section class="main-sec" id="labour">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-tag">Category 01</div>
+      <div class="section-title">Labour &amp; Services</div>
+    </div>
+    <div class="section-count">01</div>
+  </div>
+
+  <div class="labour-grid">
+    <div class="service-card reveal" onclick="openBooking('General Labour')">
+      <div class="card-icon">👷</div><span class="card-num">01</span>
+      <div class="card-title">General Labour</div>
+      <div class="card-desc">Skilled and unskilled labourers for any task — loading, shifting, site work, and more.</div>
+      <div class="card-tags"><span class="tag">Half Day</span><span class="tag">Full Day</span><span class="tag amber">New</span><span class="tag amber">Experienced</span></div>
+    </div>
+    <div class="service-card reveal" onclick="openBooking('Electrician')">
+      <div class="card-icon">⚡</div><span class="card-num">02</span>
+      <div class="card-title">Electrician</div>
+      <div class="card-desc">Certified electricians for wiring, repairs, installations, and electrical emergencies.</div>
+      <div class="card-tags"><span class="tag">Residential</span><span class="tag">Commercial</span><span class="tag amber">Emergency</span></div>
+    </div>
+    <div class="service-card reveal" onclick="openBooking('Mechanic')">
+      <div class="card-icon">🔧</div><span class="card-num">03</span>
+      <div class="card-title">Mechanic</div>
+      <div class="card-desc">Expert mechanics for vehicle maintenance, repairs, and on-site servicing.</div>
+      <div class="card-tags"><span class="tag">2-Wheeler</span><span class="tag">4-Wheeler</span><span class="tag amber">On-Site</span></div>
+    </div>
+    <div class="service-card reveal" onclick="openBooking('Cleaner')">
+      <div class="card-icon">🧹</div><span class="card-num">04</span>
+      <div class="card-title">Cleaner</div>
+      <div class="card-desc">Professional cleaning staff for homes, offices, and commercial spaces.</div>
+      <div class="card-tags"><span class="tag">Deep Clean</span><span class="tag">Regular</span><span class="tag amber">Post-Event</span></div>
+    </div>
+    <div class="service-card reveal" onclick="openBooking('Car Wash')">
+      <div class="card-icon">🚗</div><span class="card-num">05</span>
+      <div class="card-title">Car Wash</div>
+      <div class="card-desc">Doorstep car wash and detailing service — basic wash to full interior/exterior.</div>
+      <div class="card-tags"><span class="tag">Basic Wash</span><span class="tag">Detailing</span><span class="tag amber">Doorstep</span></div>
+    </div>
+    <div class="service-card reveal" onclick="openBooking('House Keeper')">
+      <div class="card-icon">🏠</div><span class="card-num">06</span>
+      <div class="card-title">House Keeper</div>
+      <div class="card-desc">Reliable housekeeping professionals for daily, weekly or monthly arrangements.</div>
+      <div class="card-tags"><span class="tag">Daily</span><span class="tag">Weekly</span><span class="tag amber">Monthly</span></div>
+    </div>
+    <div class="service-card reveal" onclick="openBooking('Chef')">
+      <div class="card-icon">👨‍🍳</div><span class="card-num">07</span>
+      <div class="card-title">Chef</div>
+      <div class="card-desc">Home chefs and event cooks — from daily meals to special occasion catering.</div>
+      <div class="card-tags"><span class="tag">Home Cook</span><span class="tag">Event Cook</span><span class="tag amber">Multi-Cuisine</span></div>
+    </div>
+    <div class="service-card reveal" onclick="openBooking('Painter')">
+      <div class="card-icon">🎨</div><span class="card-num">08</span>
+      <div class="card-title">Painter</div>
+      <div class="card-desc">Experienced painters for interior, exterior, texture finishes, and waterproofing.</div>
+      <div class="card-tags"><span class="tag">Interior</span><span class="tag">Exterior</span><span class="tag amber">Texture</span></div>
+    </div>
+    <div class="service-card reveal" onclick="openBooking('Driver')">
+      <div class="card-icon">🚘</div><span class="card-num">09</span>
+      <div class="card-title">Driver</div>
+      <div class="card-desc">Trained and verified drivers for personal, family, or corporate use.</div>
+      <div class="card-tags"><span class="tag">Half Day</span><span class="tag">Full Day</span><span class="tag amber">Outstation</span></div>
+    </div>
+    <div class="service-card reveal" onclick="openBooking('Plumber')">
+      <div class="card-icon">🪠</div><span class="card-num">10</span>
+      <div class="card-title">Plumber</div>
+      <div class="card-desc">Expert plumbers for pipe fitting, leak repairs, drainage, and water supply work.</div>
+      <div class="card-tags"><span class="tag">Repairs</span><span class="tag">Installation</span><span class="tag amber">Emergency</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VEHICLES & SERVICES ══ -->
+<section class="main-sec vehicles-section" id="vehicles">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-tag">Category 02</div>
+      <div class="section-title">Vehicles &amp; Services</div>
+    </div>
+    <div class="section-count">02</div>
+  </div>
+
+  <div class="vehicle-grid">
+    <div class="vehicle-card reveal">
+      <div class="vehicle-thumb v-car">🚗</div>
+      <div class="vehicle-body">
+        <div class="vehicle-num">VEHICLE 01</div>
+        <div class="vehicle-name">Cars</div>
+        <div class="vehicle-desc">Wide range of cars for personal or business travel. All rentals come with a professional driver.</div>
+        <div class="vehicle-options"><span class="tag">Sedan</span><span class="tag">Coupe</span><span class="tag">SUV</span><span class="tag">Off-Roading</span><span class="tag amber">Car + Driver</span></div>
+        <button class="book-btn" onclick="openBooking('Cars')">Book Now →</button>
+      </div>
+    </div>
+    <div class="vehicle-card reveal">
+      <div class="vehicle-thumb v-bike">🏍️</div>
+      <div class="vehicle-body">
+        <div class="vehicle-num">VEHICLE 02</div>
+        <div class="vehicle-name">Bikes</div>
+        <div class="vehicle-desc">Rent a bike solo or opt for a bike with a driver for quick city rides and deliveries.</div>
+        <div class="vehicle-options"><span class="tag">Bike Only</span><span class="tag amber">Bike + Driver</span></div>
+        <button class="book-btn" onclick="openBooking('Bikes')">Book Now →</button>
+      </div>
+    </div>
+    <div class="vehicle-card reveal">
+      <div class="vehicle-thumb v-bus">🚌</div>
+      <div class="vehicle-body">
+        <div class="vehicle-num">VEHICLE 03</div>
+        <div class="vehicle-name">Bus</div>
+        <div class="vehicle-desc">Perfect for group travel, school trips, events, and outstation trips with flexible configurations.</div>
+        <div class="vehicle-options"><span class="tag">Small Bus</span><span class="tag">Large Bus</span><span class="tag">AC</span><span class="tag">Non-AC</span><span class="tag amber">Sleeper</span></div>
+        <button class="book-btn" onclick="openBooking('Bus')">Book Now →</button>
+      </div>
+    </div>
+    <div class="vehicle-card reveal">
+      <div class="vehicle-thumb v-truck">🚛</div>
+      <div class="vehicle-body">
+        <div class="vehicle-num">VEHICLE 04</div>
+        <div class="vehicle-name">Delivery Trucks</div>
+        <div class="vehicle-desc">Reliable trucks for goods transportation. Pricing is calculated based on distance.</div>
+        <div class="vehicle-options"><span class="tag">Truck Only</span><span class="tag amber">Truck + Driver</span><span class="tag">Fuel Options</span></div>
+        <div class="price-note">⚡ Price depends on distance</div>
+        <button class="book-btn" onclick="openBooking('Delivery Trucks')">Book Now →</button>
+      </div>
+    </div>
+    <div class="vehicle-card reveal">
+      <div class="vehicle-thumb v-const">🏗️</div>
+      <div class="vehicle-body">
+        <div class="vehicle-num">VEHICLE 05</div>
+        <div class="vehicle-name">Construction Vehicles</div>
+        <div class="vehicle-desc">Heavy construction machines for your site. Drivers are included with every booking.</div>
+        <div class="vehicle-options"><span class="tag">JCB</span><span class="tag">Roller</span><span class="tag">Crane</span><span class="tag amber">Driver Included</span></div>
+        <button class="book-btn" onclick="openBooking('Construction Vehicles')">Book Now →</button>
+      </div>
+    </div>
+    <div class="vehicle-card reveal">
+      <div class="vehicle-thumb v-dump">🚚</div>
+      <div class="vehicle-body">
+        <div class="vehicle-num">VEHICLE 06</div>
+        <div class="vehicle-name">Dump Trucks</div>
+        <div class="vehicle-desc">Heavy-duty tippers and dumpers for construction sites, quarries, and bulk material transport.</div>
+        <div class="vehicle-options"><span class="tag">Tipper</span><span class="tag">Dumper</span><span class="tag">Half Day</span><span class="tag amber">Full Day</span></div>
+        <div class="price-note">⚡ Heavy duty — ask for quote</div>
+        <button class="book-btn" onclick="openBooking('Dump Trucks')">Book Now →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MARRIAGE & SERVICES ══ -->
+<section class="main-sec marriage-section" id="marriage">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-tag rose">Category 03</div>
+      <div class="section-title">Marriage &amp; Services</div>
+    </div>
+    <div class="section-count">03</div>
+  </div>
+
+  <div class="marriage-grid">
+    <div class="marriage-card reveal">
+      <div class="m-thumb m-cater">🍽️</div>
+      <div class="m-body">
+        <div class="m-num">SERVICE 01</div>
+        <div class="m-name">Caterers</div>
+        <div class="m-desc">Professional catering teams for weddings, engagements, and family functions of all sizes.</div>
+        <div class="m-opts"><span class="tag rose">Veg</span><span class="tag rose">Non-Veg</span><span class="tag amber">Multi-Cuisine</span></div>
+        <button class="m-book-btn" onclick="openBooking('Caterers')">Book Caterers →</button>
+      </div>
+    </div>
+    <div class="marriage-card reveal">
+      <div class="m-thumb m-waiter">🤵</div>
+      <div class="m-body">
+        <div class="m-num">SERVICE 02</div>
+        <div class="m-name">Waiters</div>
+        <div class="m-desc">Trained and presentable waiters for events, parties, and wedding receptions.</div>
+        <div class="m-opts"><span class="tag rose">Half Day</span><span class="tag rose">Full Day</span><span class="tag amber">Uniform Included</span></div>
+        <button class="m-book-btn" onclick="openBooking('Waiters')">Book Waiters →</button>
+      </div>
+    </div>
+    <div class="marriage-card reveal">
+      <div class="m-thumb m-caterer2">👨‍🍳</div>
+      <div class="m-body">
+        <div class="m-num">SERVICE 03</div>
+        <div class="m-name">Caterers + Waiters</div>
+        <div class="m-desc">Complete package — catering team with dedicated waiters for a seamless event experience.</div>
+        <div class="m-opts"><span class="tag rose">Complete Package</span><span class="tag amber">Best Value</span></div>
+        <button class="m-book-btn" onclick="openBooking('Caterers + Waiters Package')">Book Package →</button>
+      </div>
+    </div>
+    <div class="marriage-card reveal">
+      <div class="m-thumb m-veh">🚐</div>
+      <div class="m-body">
+        <div class="m-num">SERVICE 04</div>
+        <div class="m-name">Vehicles for Events</div>
+        <div class="m-desc">Decorated and premium vehicles for bridal entry, baraat, guest transfers, and event logistics.</div>
+        <div class="m-opts"><span class="tag rose">Bridal Car</span><span class="tag rose">Baraat</span><span class="tag amber">Guest Shuttle</span></div>
+        <button class="m-book-btn" onclick="openBooking('Vehicles for Events')">Book Vehicle →</button>
+      </div>
+    </div>
+    <div class="marriage-card reveal">
+      <div class="m-thumb m-hall">🏛️</div>
+      <div class="m-body">
+        <div class="m-num">SERVICE 05</div>
+        <div class="m-name">Marriage Halls</div>
+        <div class="m-desc">Elegant, spacious marriage halls with flexible capacities for intimate ceremonies to grand celebrations.</div>
+        <div class="m-opts"><span class="tag rose">AC Hall</span><span class="tag rose">Non-AC</span><span class="tag amber">Parking Included</span></div>
+        <button class="m-book-btn" onclick="openBooking('Marriage Hall')">Book Hall →</button>
+      </div>
+    </div>
+    <div class="marriage-card reveal">
+      <div class="m-thumb m-lawn">🌿</div>
+      <div class="m-body">
+        <div class="m-num">SERVICE 06</div>
+        <div class="m-name">Lawns</div>
+        <div class="m-desc">Beautiful open lawns for outdoor weddings, mehendi ceremonies, and evening receptions.</div>
+        <div class="m-opts"><span class="tag rose">Day Event</span><span class="tag rose">Night Event</span><span class="tag amber">Seating Included</span></div>
+        <button class="m-book-btn" onclick="openBooking('Lawn Booking')">Book Lawn →</button>
+      </div>
+    </div>
+    <div class="marriage-card reveal">
+      <div class="m-thumb m-farm">🌾</div>
+      <div class="m-body">
+        <div class="m-num">SERVICE 07</div>
+        <div class="m-name">Farm House</div>
+        <div class="m-desc">Private farm houses for exclusive destination events, pre-wedding shoots, and family celebrations.</div>
+        <div class="m-opts"><span class="tag rose">Exclusive Access</span><span class="tag amber">Pool Available</span></div>
+        <button class="m-book-btn" onclick="openBooking('Farm House')">Book Farm House →</button>
+      </div>
+    </div>
+    <div class="marriage-card reveal">
+      <div class="m-thumb m-utensil">🫕</div>
+      <div class="m-body">
+        <div class="m-num">SERVICE 08</div>
+        <div class="m-name">Utensils for Food Making</div>
+        <div class="m-desc">Rent large-scale cooking utensils, vessels, and equipment for community feasts and events.</div>
+        <div class="m-opts"><span class="tag rose">Large Vessels</span><span class="tag rose">Burners</span><span class="tag amber">Delivery Available</span></div>
+        <button class="m-book-btn" onclick="openBooking('Utensils for Food Making')">Book Utensils →</button>
+      </div>
+    </div>
+    <div class="marriage-card reveal">
+      <div class="m-thumb m-decor">💐</div>
+      <div class="m-body">
+        <div class="m-num">SERVICE 09</div>
+        <div class="m-name">Decorations + Decorator</div>
+        <div class="m-desc">Complete decoration service with a professional decorator — themes, lighting, floral, and stage setup.</div>
+        <div class="m-opts"><span class="tag rose">Floral</span><span class="tag rose">LED Lights</span><span class="tag rose">Stage Setup</span><span class="tag amber">Custom Theme</span></div>
+        <button class="m-book-btn" onclick="openBooking('Decorations + Decorator')">Book Decorator →</button>
+      </div>
+    </div>
+    <div class="marriage-card reveal">
+      <div class="m-thumb m-event">🎊</div>
+      <div class="m-body">
+        <div class="m-num">SERVICE 10</div>
+        <div class="m-name">Event Organizers</div>
+        <div class="m-desc">End-to-end event management professionals who handle everything from planning to execution.</div>
+        <div class="m-opts"><span class="tag rose">Full Management</span><span class="tag rose">Day-of Coordination</span><span class="tag amber">Budget Plans</span></div>
+        <button class="m-book-btn" onclick="openBooking('Event Organizers')">Book Organizer →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LISTINGS / BROWSE ══ -->
+<section class="main-sec listings-section" id="listings">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-tag">Live Listings</div>
+      <div class="section-title">Browse Available Services</div>
+    </div>
+    <div class="section-count">04</div>
+  </div>
+
+  <div class="cat-nav reveal">
+    <button class="cat-btn active" onclick="filterListings(this,'all')">All</button>
+    <button class="cat-btn" onclick="filterListings(this,'labour')">Labour</button>
+    <button class="cat-btn" onclick="filterListings(this,'vehicle')">Vehicles</button>
+    <button class="cat-btn rose" onclick="filterListings(this,'marriage')">Marriage</button>
+  </div>
+
+  <div class="listings-grid" id="listingsGrid">
+    <!-- Populated by JS -->
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="main-sec" id="how" style="background:var(--surface);">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-tag">Process</div>
+      <div class="section-title">How It Works</div>
+    </div>
+    <div class="section-count">05</div>
+  </div>
+  <div class="how-grid reveal">
+    <div class="how-step"><div class="step-num">01</div><div class="step-icon">🔍</div><div class="step-title">Browse Services</div><div class="step-desc">Explore our full range of labour, vehicles, and wedding services available near you.</div></div>
+    <div class="how-step"><div class="step-num">02</div><div class="step-icon">📅</div><div class="step-title">Pick &amp; Schedule</div><div class="step-desc">Choose your service type, preferred time — half day, full day, or hourly slot.</div></div>
+    <div class="how-step"><div class="step-num">03</div><div class="step-icon">💳</div><div class="step-title">Pay Securely</div><div class="step-desc">Pay online via Razorpay, Paytm, or Stripe — 100% secure checkout with instant confirmation.</div></div>
+    <div class="how-step"><div class="step-num">04</div><div class="step-icon">✅</div><div class="step-title">Confirm Booking</div><div class="step-desc">Get instant confirmation with professional details and estimated arrival time.</div></div>
+    <div class="how-step"><div class="step-num">05</div><div class="step-icon">⭐</div><div class="step-title">Rate &amp; Review</div><div class="step-desc">After service, rate your experience and help others make better decisions.</div></div>
+  </div>
+</section>
+
+<!-- ══ OWNER CTA ══ -->
+<div class="owner-cta">
+  <div class="cta-text">
+    <div class="cta-label">For Service Owners</div>
+    <h2>Got a service?<br>Start earning today.</h2>
+    <p>Register as an owner, list your services or vehicles, set your pricing, and start receiving bookings. No setup fee. Earn from Day 1.</p>
+  </div>
+  <div class="cta-actions">
+    <button class="btn-primary" onclick="openModal('registerModal')">Register as Owner →</button>
+    <a href="owner_dashboard.html" class="btn-outline-hero" style="display:inline-block;text-align:center;">Owner Dashboard</a>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer id="contact">
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo"><span>OR</span> ON RENT</div>
+      <p class="footer-tagline">India's trusted rental platform for labour, vehicles &amp; wedding services — delivered to your door.</p>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:16px;">
+        <span style="font-size:0.8rem;color:var(--muted);">📧 support@oronrent.in</span>
+        <span style="font-size:0.8rem;color:var(--muted);">📞 +91 98765 43210</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Labour</h4>
+      <ul>
+        <li><a href="#">General Labour</a></li><li><a href="#">Electrician</a></li>
+        <li><a href="#">Mechanic</a></li><li><a href="#">Plumber</a></li>
+        <li><a href="#">Painter</a></li><li><a href="#">Chef</a></li>
+        <li><a href="#">Driver</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Vehicles</h4>
+      <ul>
+        <li><a href="#">Cars</a></li><li><a href="#">Bikes</a></li>
+        <li><a href="#">Bus</a></li><li><a href="#">Delivery Trucks</a></li>
+        <li><a href="#">Construction</a></li><li><a href="#">Dump Trucks</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Marriage</h4>
+      <ul>
+        <li><a href="#">Caterers</a></li><li><a href="#">Waiters</a></li>
+        <li><a href="#">Marriage Halls</a></li><li><a href="#">Lawns</a></li>
+        <li><a href="#">Decorations</a></li><li><a href="#">Event Organizers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About OR</a></li><li><a href="#" onclick="openModal('registerModal');return false;">List Your Service</a></li>
+        <li><a href="#">Partner With Us</a></li><li><a href="#">Support</a></li>
+        <li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 <span>OR — On Rent</span>. All rights reserved.</p>
+    <div class="footer-socials">
+      <a class="social-btn" href="#">📘</a>
+      <a class="social-btn" href="#">📸</a>
+      <a class="social-btn" href="#">🐦</a>
+      <a class="social-btn" href="#">💼</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP -->
+<a class="whatsapp-btn" href="https://wa.me/919876543210?text=Hi, I need help with OR On Rent" target="_blank" title="WhatsApp Support">💬</a>
+
+<!-- ══ LOGIN MODAL ══ -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
+    <h3>Welcome Back</h3>
+    <p class="modal-sub">Log in to your OR account to manage bookings.</p>
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" placeholder="your@email.com" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" placeholder="Enter password" required/>
+      </div>
+      <button class="modal-btn" type="submit">Login →</button>
+    </form>
+    <div class="modal-toggle">Don't have an account? <a href="#" onclick="switchModal('loginModal','registerModal')">Register Here</a></div>
+    <div class="modal-toggle" style="margin-top:8px;"><a href="owner_login.php">Owner Login →</a></div>
+  </div>
+</div>
+
+<!-- ══ REGISTER MODAL ══ -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('registerModal')">✕</button>
+    <h3>List Your Service</h3>
+    <p class="modal-sub">Register as an owner and start earning today.</p>
+    <form onsubmit="handleRegister(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input class="form-input" type="text" placeholder="Your name" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mobile Number</label>
+          <input class="form-input" type="tel" placeholder="+91 XXXXX XXXXX" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" placeholder="your@email.com" required/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">City</label>
+          <select class="form-input form-select">
+            <option value="">Select City</option>
+            <option>Pune</option><option>Mumbai</option><option>Nashik</option><option>Nagpur</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Area / Pincode</label>
+          <input class="form-input" type="text" placeholder="Area or PIN code" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" placeholder="Create password" required/>
+      </div>
+      <button class="modal-btn" type="submit">Create Account →</button>
+    </form>
+    <div class="modal-toggle">Already registered? <a href="#" onclick="switchModal('registerModal','loginModal')">Login Here</a></div>
+  </div>
+</div>
+
+<!-- ══ BOOKING MODAL ══ -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('bookingModal')">✕</button>
+    <h3>Book Service</h3>
+    <p class="modal-sub" id="bookingServiceName">—</p>
+    <div class="booking-detail">
+      <div class="booking-detail-title" id="bookingTitle">Service Name</div>
+      <div class="booking-detail-sub">Fill in your details to confirm booking</div>
+    </div>
+    <form onsubmit="handleBooking(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" type="text" placeholder="Full name" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mobile</label>
+          <input class="form-input" type="tel" placeholder="+91 XXXXX XXXXX" required/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Booking Date</label>
+          <input class="form-input" type="date" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Duration</label>
+          <select class="form-input form-select">
+            <option>Half Day (4 hrs)</option>
+            <option>Full Day (8 hrs)</option>
+            <option>Hourly</option>
+            <option>Multi-Day</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Address / Location</label>
+        <input class="form-input" type="text" placeholder="Service location" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Payment Method</label>
+        <div class="payment-options">
+          <div class="pay-opt selected" onclick="selectPay(this)">💳 Razorpay</div>
+          <div class="pay-opt" onclick="selectPay(this)">📱 Paytm</div>
+          <div class="pay-opt" onclick="selectPay(this)">🌐 Stripe</div>
+        </div>
+      </div>
+      <button class="modal-btn" type="submit">Confirm &amp; Pay →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// ── SAMPLE LISTINGS DATA ──
+const listings = [
+  {id:1,cat:'labour',icon:'⚡',title:'Certified Electrician – Rajesh Kumar',loc:'Pimpri, Pune',price:'₹450',per:'/half day',rating:'4.8',reviews:32},
+  {id:2,cat:'labour',icon:'🔧',title:'Expert Mechanic – Suresh Auto',loc:'Chinchwad, Pune',price:'₹600',per:'/visit',rating:'4.6',reviews:18},
+  {id:3,cat:'vehicle',icon:'🚗',title:'Honda City with Driver – AC Sedan',loc:'Wakad, Pune',price:'₹1,200',per:'/day',rating:'4.9',reviews:54},
+  {id:4,cat:'vehicle',icon:'🚌',title:'AC Mini Bus (20 Seater)',loc:'Kothrud, Pune',price:'₹3,500',per:'/day',rating:'4.7',reviews:21},
+  {id:5,cat:'marriage',icon:'🍽️',title:'Sharma Caterers – Veg & Non-Veg',loc:'Nigdi, Pune',price:'₹180',per:'/plate',rating:'4.9',reviews:87},
+  {id:6,cat:'marriage',icon:'💐',title:'Dream Decorations Studio',loc:'Akurdi, Pune',price:'₹15,000',per:'/event',rating:'4.8',reviews:43},
+  {id:7,cat:'labour',icon:'🧹',title:'CleanStar Home Cleaning',loc:'Baner, Pune',price:'₹350',per:'/visit',rating:'4.5',reviews:29},
+  {id:8,cat:'vehicle',icon:'🚛',title:'Delivery Truck – 407 with Driver',loc:'Bhosari, Pune',price:'₹2,000',per:'/day',rating:'4.4',reviews:15},
+  {id:9,cat:'marriage',icon:'🏛️',title:'Lotus Marriage Hall – 500 Capacity',loc:'Pimpri, Pune',price:'₹25,000',per:'/day',rating:'4.7',reviews:62},
+  {id:10,cat:'labour',icon:'👨‍🍳',title:'Home Chef – Anita Deshpande',loc:'Wakad, Pune',price:'₹800',per:'/day',rating:'4.9',reviews:41},
+  {id:11,cat:'marriage',icon:'🌿',title:'Green Garden Lawn – 300 Guests',loc:'Ravet, Pune',price:'₹18,000',per:'/event',rating:'4.6',reviews:33},
+  {id:12,cat:'vehicle',icon:'🏍️',title:'Bike Rental – Splendor + Driver',loc:'Moshi, Pune',price:'₹300',per:'/day',rating:'4.3',reviews:11},
+];
+
+function renderListings(filter='all') {
+  const grid = document.getElementById('listingsGrid');
+  const filtered = filter === 'all' ? listings : listings.filter(l => l.cat === filter);
+  grid.innerHTML = filtered.map(l => `
+    <div class="listing-card reveal">
+      <div class="listing-img" style="font-size:3.5rem;background:var(--surface);">${l.icon}</div>
+      <div class="listing-body">
+        <div class="listing-cat">${l.cat.toUpperCase()}</div>
+        <div class="listing-title">${l.title}</div>
+        <div class="listing-loc">📍 ${l.loc}</div>
+        <div><span class="listing-price">${l.price}</span><span class="listing-price-sub">${l.per}</span></div>
+        <div class="listing-footer">
+          <div class="listing-rating">⭐ ${l.rating} <span style="color:var(--muted);">(${l.reviews})</span></div>
+          <button class="listing-book-btn" onclick="openBooking('${l.title}')">Book Now</button>
+        </div>
+      </div>
+    </div>`).join('');
+  document.querySelectorAll('.listing-card.reveal').forEach(el => {
+    setTimeout(() => el.classList.add('visible'), 50);
+  });
+}
+
+function filterListings(btn, cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderListings(cat);
+}
+
+// ── MODALS ──
+function openModal(id) {
+  document.getElementById(id).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+  document.body.style.overflow = '';
+}
+function switchModal(closeId, openId) {
+  closeModal(closeId);
+  setTimeout(() => openModal(openId), 150);
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) closeModal(this.id);
+  });
+});
+
+function openBooking(serviceName) {
+  document.getElementById('bookingServiceName').textContent = 'Booking: ' + serviceName;
+  document.getElementById('bookingTitle').textContent = serviceName;
+  openModal('bookingModal');
+}
+
+function selectPay(el) {
+  document.querySelectorAll('.pay-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ── FORM HANDLERS ──
+function handleLogin(e) {
+  e.preventDefault();
+  alert('✅ Login successful! Redirecting to dashboard...');
+  closeModal('loginModal');
+}
+function handleRegister(e) {
+  e.preventDefault();
+  alert('🎉 Account created! You can now add your listings.');
+  closeModal('registerModal');
+}
+function handleBooking(e) {
+  e.preventDefault();
+  const service = document.getElementById('bookingTitle').textContent;
+  alert(`✅ Booking confirmed for "${service}"!\nOur team will contact you shortly.\n\nPayment link will be sent to your mobile.`);
+  closeModal('bookingModal');
+}
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── INIT ──
+renderListings();
+</script>
+</body>
+</html>
